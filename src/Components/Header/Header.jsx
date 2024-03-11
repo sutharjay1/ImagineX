@@ -25,6 +25,10 @@ const Header = () => {
     dispatch(setHistory(tempQuery));
     dispatch(setQuery(tempQuery));
     dispatch(setIsNewQuery(true));
+
+    setTimeout(() => {
+      dispatch(setIsNewQuery(false));
+    }, 1000);
   };
 
   const menuItems = [

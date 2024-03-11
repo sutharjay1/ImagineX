@@ -18,7 +18,7 @@ const useGetImage = () => {
       if (!query) return;
 
       const data = await axios.get(
-        `https://api.unsplash.com/search/photos?query=${query}&client_id=${clientId}&per_page=20&page=${pageNumber}`
+        `https://api.unsplash.com/search/photos?query=${query}&client_id=${clientId}&count=20&per_page=20&page=${pageNumber}`
       );
       const newResult = data?.data?.results;
 

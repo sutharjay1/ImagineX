@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsNewQuery, setQuery } from '../../store/searchQuery.js';
+import { setImages } from '../../store/imageSlice.js';
+import { setHistory } from '../../store/historySlice.js';
 
 const ViewImage = () => {
   const dispatch = useDispatch();
@@ -19,7 +21,9 @@ const ViewImage = () => {
   };
 
   const handleTagQuery = (query) => {
+    dispatch(setImages([]));
     dispatch(setQuery(query));
+    dispatch(setHistory(query));
     dispatch(setIsNewQuery(false));
   };
 

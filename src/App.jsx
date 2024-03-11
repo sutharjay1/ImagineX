@@ -4,9 +4,11 @@ import useGetImage from './Hooks/useGetImage.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPageNumber } from './store/searchQuery.js';
 import { useRef } from 'react';
+import useGetRandomImage from './Hooks/useGetRandomImage.js';
 
 function App() {
   useGetImage();
+  useGetRandomImage();
 
   const dispatch = useDispatch();
   const containerRef = useRef();
