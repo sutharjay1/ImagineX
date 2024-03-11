@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setQuery } from '../../store/searchQuery';
+import { setIsNewQuery, setQuery } from '../../store/searchQuery';
 import { setImages } from '../../store/imageSlice';
 import { setHistory } from '../../store/historySlice';
 
 const Header = () => {
   const dispatch = useDispatch();
 
+  const images = useSelector((store) => store?.image?.images);
+
   const query = useSelector((store) => store?.searchQuery?.query);
+  const isNewQuery = useSelector((store) => store?.searchQuery?.isNewQuery);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [tempQuery, setTempQuery] = useState(null);
@@ -21,6 +24,7 @@ const Header = () => {
     e.preventDefault();
     dispatch(setHistory(tempQuery));
     dispatch(setQuery(tempQuery));
+    dispatch(setIsNewQuery(true));
   };
 
   const menuItems = [

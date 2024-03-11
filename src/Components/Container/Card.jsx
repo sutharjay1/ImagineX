@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import ViewImage from './ViewImage';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentViewImage } from '../../store/historySlice.js';
 import { IoClose } from 'react-icons/io5';
 
 const Card = ({ image }) => {
   const dispatch = useDispatch();
   const [showImagePanel, setShowImagePanel] = useState(false);
+
+  const query = useSelector((store) => store?.searchQuery?.query);
 
   const handleShowImagePanel = (image) => {
     setShowImagePanel(true);

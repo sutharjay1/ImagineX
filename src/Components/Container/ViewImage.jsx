@@ -1,8 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsNewQuery, setQuery } from '../../store/searchQuery.js';
 
 const ViewImage = () => {
+  const dispatch = useDispatch();
   const currentImage = useSelector((store) => store?.history?.currentViewImage);
+  const isNewQuery = useSelector((store) => store?.searchQuery?.isNewQuery);
 
   const handleDownloadImage = () => {
     const link = document.createElement('a');
@@ -15,9 +18,16 @@ const ViewImage = () => {
     document.body.removeChild(link);
   };
 
+  const handleTagQuery = (query) => {
+    dispatch(setQuery(query));
+    dispatch(setIsNewQuery(false));
+  };
+
   return (
     <>
-      <div className="w-full h-screen flex flex-col items-center justify-start bg-zinc-700/70 mx-14 rounded-lg overflow-hidden ">
+      <div
+        className={`w-full h-screen flex flex-col items-center justify-start bg-zinc-700/70 mx-14 rounded-lg overflow-hidden `}
+      >
         <div className="w-full flex items-center justify-between p-4 bg-[#ffffff]">
           <div className="flex items-center bottom-4 left-4 gap-2 text-left rounded-md">
             <img
@@ -44,15 +54,16 @@ const ViewImage = () => {
             className="w-auto h-full "
           />
         </div>
-        <div className="w-full flex flex-col items-center justify-start p-9 bg-[#ffffff] text-zinc-800">
-          <span>Likes</span>
-          <span className="text-xl font-bold">{currentImage?.likes}</span>
+        <div className="w-full flex flex-col items-start justify-start p-9 bg-[#ffffff] text-zinc-800">
+          <span className="text-base font-normal">Likes</span>
+          <span className="text-base font-normal">{currentImage?.likes}</span>
         </div>
         <div className="w-full flex items-center justify-start p-10 bg-[#ffffff] text-zinc-800 gap-4">
           {currentImage?.tags?.map((tag) => (
             <span
-              className="px-3 py-2 rounded-sm bg-[#d6d6d6] capitalize"
+              className="px-3 py-2 rounded-md bg-[#d6d6d6] capitalize"
               key={tag?.title}
+              onClick={() => handleTagQuery(tag?.title)}
             >
               {tag?.title}
             </span>

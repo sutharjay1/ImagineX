@@ -11,6 +11,7 @@ const useGetImage = () => {
   const query = useSelector((store) => store?.searchQuery?.query);
   const pageNumber = useSelector((store) => store?.searchQuery?.pageNumber);
   const images = useSelector((store) => store?.image?.images);
+  const isNewQuery = useSelector((store) => store?.searchQuery?.isNewQuery);
 
   const getImage = async () => {
     try {
@@ -20,7 +21,10 @@ const useGetImage = () => {
         `https://api.unsplash.com/search/photos?query=${query}&client_id=${clientId}&per_page=20&page=${pageNumber}`
       );
       const newResult = data?.data?.results;
-      dispatch(setImages([...images, ...newResult]));
+
+      isNewQuery
+        ? dispatch(setImages([...newResult, ...images]))
+        : dispatch(setImages([...images, ...newResult]));
     } catch (error) {
       console.log(error);
     }
