@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuery } from '../../store/searchQuery';
+import { setImages } from '../../store/imageSlice';
+import { setHistory } from '../../store/historySlice';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ const Header = () => {
 
   const handleSearchQuery = (e) => {
     e.preventDefault();
+    dispatch(setHistory(tempQuery));
     dispatch(setQuery(tempQuery));
   };
 

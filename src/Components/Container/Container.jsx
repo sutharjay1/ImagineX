@@ -9,7 +9,7 @@ const Container = () => {
 
   return (
     <div className="max-w-7xl mx-auto flex items-center justify-between p-4 ">
-      <div className="grid grid-cols-4 gap-4 w-full ">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 w-full ">
         {/* {query && images.map((image, index) => <Card image={image} />)} */}
         {images.map((image, index) => (
           <Card image={image} />
