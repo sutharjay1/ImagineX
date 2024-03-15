@@ -19,10 +19,6 @@ const Card = ({ image }) => {
     setShowImagePanel(false);
   };
 
-  const handleImagePanelClick = (e) => {
-    e.stopPropagation(); // Prevent click event from bubbling up to the card
-  };
-
   return (
     <>
       <div
@@ -35,10 +31,11 @@ const Card = ({ image }) => {
           </p>
         )}
         <img
-          src={image?.urls?.regular}
+          src={image?.urls?.small}
           key={image?.id}
           alt={image?.alt_description}
-          className="z-0 h-full w-full rounded-md object-cover"
+          className="w-full rounded-md object-cover transition-transform duration-300 transform hover:scale-110"
+          // ^^^ Added 'hover:scale-110' class here
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent "></div>
         <div className="absolute flex items-center bottom-4 left-4 gap-2 text-left rounded-md">
@@ -53,24 +50,15 @@ const Card = ({ image }) => {
         </div>
       </div>
       {showImagePanel && (
-        <div
-          className="fixed z-10 inset-0 flex items-center justify-center overflow-y-scroll"
-          onClick={handleHideImagePanel}
-        >
+        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-70">
           <button
-            className="absolute top-0 left-0 my-3 mx-2 text-zinc-200 hover:text-zinc-300"
+            className="absolute top-4 left-4 text-white text-xl rounded-full bg-gray-800 bg-opacity-50 p-2 hover:bg-opacity-75 lg:block md:block"
             onClick={handleHideImagePanel}
           >
-            <IoClose size={30} />
+            <IoClose />
           </button>
-          <div className="fixed inset-0 bg-black opacity-50"></div>
-          <div
-            className="w-full h-40 absolute top-0 mx-auto mt-10 z-50"
-            onClick={handleImagePanelClick}
-          >
-            <div className=" p-4 rounded-md mr-20 ">
-              <ViewImage />
-            </div>
+          <div className="lg:max-w-[95rem] md:max-w-[95rem] sm:max-w-[75rem] max-w-[50rem] w-full lg:p-4 md:p-4 sm:p-4 p-0 ">
+            <ViewImage />
           </div>
         </div>
       )}

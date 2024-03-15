@@ -3,7 +3,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setImages } from '../store/imageSlice.js';
 
-const clientId = 'cWhqebO7qsTYKhipotHNSydroNIEy2wTVsEJ3qCsPJc';
+// const clientId = import.meta.env.VITE_API_ONE;
+const clientId = import.meta.env.VITE_API_TWO;
+// const clientId = import.meta.env.VITE_API_THREE;
+
+
+
 
 const useGetImage = () => {
   const dispatch = useDispatch();
