@@ -7,9 +7,6 @@ import { setImages } from '../store/imageSlice.js';
 const clientId = import.meta.env.VITE_API_TWO;
 // const clientId = import.meta.env.VITE_API_THREE;
 
-
-
-
 const useGetImage = () => {
   const dispatch = useDispatch();
 
