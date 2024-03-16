@@ -45,6 +45,7 @@ const Header = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    dispatch(setIsSearching(false));
   };
 
   const handleSearchQuery = (e) => {

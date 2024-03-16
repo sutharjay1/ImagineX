@@ -25,7 +25,7 @@ const SearchBarTag = () => {
 
   return (
     <>
-      <div className="absolute right-0 top-[calc(100%+0.3rem)] lg:w-[600px] sm:w-[400px] w-full  md:block hidden bg-black/80 backdrop-blur-sm p-4 rounded-md border-[1px] border-zinc-600 space-y-2 lg:flex flex-col ">
+      <div className="absolute right-0 top-[calc(100%+0.3rem)]  w-full bg-black/80 backdrop-blur-sm p-4 rounded-md border-[1px] border-zinc-600 space-y-2 lg:flex flex-col ">
         <h1 className="text-white text-lg font-bold">Recent Searches</h1>
         <div className="flex items-center cursor-pointer w-fit gap-3 flex-wrap">
           {history
