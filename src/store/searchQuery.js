@@ -6,6 +6,7 @@ const searchQuery = createSlice({
     query: null,
     pageNumber: 0,
     isNewQuery: false,
+    isSearching: false,
   },
   reducers: {
     setQuery: (state, action) => {
@@ -17,9 +18,13 @@ const searchQuery = createSlice({
     setIsNewQuery: (state, action) => {
       state.isNewQuery = action.payload;
     },
+    setIsSearching: (state, action) => {
+      state.isSearching = action.payload;
+    },
   },
 });
 
-export const { setQuery, setPageNumber, setIsNewQuery } = searchQuery.actions;
+export const { setQuery, setPageNumber, setIsNewQuery, setIsSearching } =
+  searchQuery.actions;
 
 export default searchQuery.reducer;

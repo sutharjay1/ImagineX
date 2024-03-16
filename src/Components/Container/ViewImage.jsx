@@ -32,7 +32,7 @@ const ViewImage = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-start bg-black/35 backdrop-blur-lg lg:mr-40 md:mx-2 mx-0 lg:mt-14 md:mt-14 mt-14 rounded-lg  z-50 overflow-y-auto">
+      <div className="fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-start bg-black/35 backdrop-blur-lg lg:mr-40 md:mx-2 mx-0 lg:mt-14 md:mt-14 mt-14 rounded-lg z-50 overflow-y-auto">
         <div className="w-full flex items-center justify-between  bg-black/5 backdrop-blur-lg lg:p-5 md:p- p-5">
           <div className="flex items-center gap-4 text-left">
             <img
@@ -101,7 +101,7 @@ const ViewImage = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-wrap items-center justify-start px-4 bg-black/40 backdrop-blur-lg text-zinc-800 gap-2">
+        <div className="w-full flex flex-wrap items-center justify-start px-4 bg-black/40 backdrop-blur-lg text-zinc-800 gap-2 overflow-x-auto pb-4">
           {currentImage?.tags?.map((tag) => (
             <span
               key={tag?.title}

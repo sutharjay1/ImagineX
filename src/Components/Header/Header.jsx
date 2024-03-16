@@ -1,17 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsNewQuery, setQuery } from '../../store/searchQuery';
+import {
+  setIsNewQuery,
+  setIsSearching,
+  setQuery,
+} from '../../store/searchQuery';
 import { setImages } from '../../store/imageSlice';
 import { setHistory } from '../../store/historySlice';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import SearchBarTag from '../Container/SearchBarTag';
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [isSearching, setIsSearching] = useState(false);
+  const isSearching = useSelector((store) => store?.searchQuery?.isSearching);
 
   const images = useSelector((store) => store?.image?.images);
 
@@ -30,6 +35,8 @@ const Header = () => {
       }
     };
 
+    dispatch(setIsSearching(false));
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -43,8 +50,8 @@ const Header = () => {
   const handleSearchQuery = (e) => {
     e.preventDefault();
     dispatch(setHistory(tempQuery));
-    // dispatch(setQuery(tempQuery));
     dispatch(setIsNewQuery(true));
+    dispatch(setIsSearching(false));
     navigate(`/photos?query=${tempQuery}`);
 
     setTimeout(() => {
@@ -52,16 +59,8 @@ const Header = () => {
     }, 1000);
   };
 
-  const handleTagQuery = (query) => {
-    dispatch(setImages([]));
-    dispatch(setQuery(query));
-    dispatch(setHistory(query));
-    dispatch(setIsNewQuery(false));
-    navigate(`/photos?query=${query}`);
-  };
-
   const handleRecentSearch = () => {
-    setIsSearching((prevIsSearching) => !prevIsSearching);
+    dispatch(setIsSearching(!isSearching));
   };
 
   const menuItems = [
@@ -69,14 +68,6 @@ const Header = () => {
       name: 'Random',
       href: '/random',
     },
-    // {
-    //   name: 'About',
-    //   href: '#',
-    // },
-    // {
-    //   name: 'Contact',
-    //   href: '#',
-    // },
   ];
 
   return (
@@ -124,26 +115,8 @@ const Header = () => {
                 onClick={handleRecentSearch}
               />
             </form>
-            {isSearching && (
-              <div className="absolute right-0 top-[calc(100%+0.3rem)] lg:w-[600px] sm:w-[400px] w-full lg:block md:block hidden bg-black/80 backdrop-blur-sm p-4 rounded-md border-[1px] border-zinc-600 space-y-2 flex flex-wrap">
-                <h1 className="text-white text-lg font-bold">
-                  Recent Searches
-                </h1>
-                {history
-                  .filter((item) => item.trim() !== '' && item.match(item))
-                  ?.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center cursor-pointer"
-                      onClick={() => handleTagQuery(item)}
-                    >
-                      <span className="text-sm px-3 py-3 capitalize bg-black/50 text-zinc-200 rounded-md border-[1px] border-zinc-700">
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-              </div>
-            )}
+
+            {isSearching && <SearchBarTag />}
           </div>
 
           <div className="ml-2 lg:hidden">
