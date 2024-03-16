@@ -7,6 +7,7 @@ import { IoClose } from 'react-icons/io5';
 const Card = ({ image }) => {
   const dispatch = useDispatch();
   const [showImagePanel, setShowImagePanel] = useState(false);
+  const [hover, setHover] = useState(false);
 
   const query = useSelector((store) => store?.searchQuery?.query);
 
@@ -19,11 +20,21 @@ const Card = ({ image }) => {
     setShowImagePanel(false);
   };
 
+  const handleMouseEnter = () => {
+    setHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(false);
+  };
+
   return (
     <>
       <div
         className="relative w-fit h-fit rounded-md overflow-hidden"
         onClick={() => handleShowImagePanel(image)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {image?.sponsorship && (
           <p className="absolute top-4 left-2 text-white px-2 py-1 rounded-md">
@@ -34,8 +45,9 @@ const Card = ({ image }) => {
           src={image?.urls?.small}
           key={image?.id}
           alt={image?.alt_description}
-          className="w-full rounded-md object-cover transition-transform duration-300 transform hover:scale-110"
-          // ^^^ Added 'hover:scale-110' class here
+          className={`w-full rounded-md object-cover transition-transform duration-300 transform ${
+            hover ? 'scale-105' : ''
+          }`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent "></div>
         <div className="absolute flex items-center bottom-4 left-4 gap-2 text-left rounded-md">
@@ -52,7 +64,7 @@ const Card = ({ image }) => {
       {showImagePanel && (
         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-70">
           <button
-            className="absolute top-4 left-4 text-white text-xl rounded-full bg-gray-800 bg-opacity-50 p-2 hover:bg-opacity-75 lg:block md:block"
+            className="absolute top-3 left-3 text-white text-xl rounded-full bg-gray-800 bg-opacity-50 p-2 hover:bg-opacity-75 lg:block md:block"
             onClick={handleHideImagePanel}
           >
             <IoClose />

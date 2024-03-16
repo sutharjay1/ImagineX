@@ -11,10 +11,13 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [isSearching, setIsSearching] = useState(false);
+
   const images = useSelector((store) => store?.image?.images);
 
   const query = useSelector((store) => store?.searchQuery?.query);
   const isNewQuery = useSelector((store) => store?.searchQuery?.isNewQuery);
+  const history = useSelector((store) => store?.history?.history);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [tempQuery, setTempQuery] = useState(null);
@@ -47,6 +50,18 @@ const Header = () => {
     setTimeout(() => {
       dispatch(setIsNewQuery(false));
     }, 1000);
+  };
+
+  const handleTagQuery = (query) => {
+    dispatch(setImages([]));
+    dispatch(setQuery(query));
+    dispatch(setHistory(query));
+    dispatch(setIsNewQuery(false));
+    navigate(`/photos?query=${query}`);
+  };
+
+  const handleRecentSearch = () => {
+    setIsSearching((prevIsSearching) => !prevIsSearching);
   };
 
   const menuItems = [
@@ -98,7 +113,7 @@ const Header = () => {
               ))}
             </ul>
           </div>
-          <div className="w-full flex justify-end lg:mx-auto sm:mx-3 mx-1">
+          <div className="w-full relative flex justify-end lg:mx-auto sm:mx-3 mx-1">
             <form onSubmit={handleSearchQuery}>
               <input
                 className="lg:w-[600px] sm:w-[400px] w-full max-w-xl h-10 flex sm:justify-center justify-center rounded-lg bg-black/90 pl-5 px-3 py-2 text-sm placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
@@ -106,8 +121,29 @@ const Header = () => {
                 placeholder="Search"
                 value={tempQuery}
                 onChange={(e) => setTempQuery(e.target.value)}
+                onClick={handleRecentSearch}
               />
             </form>
+            {isSearching && (
+              <div className="absolute right-0 top-[calc(100%+0.3rem)] lg:w-[600px] sm:w-[400px] w-full lg:block md:block hidden bg-black/80 backdrop-blur-sm p-4 rounded-md border-[1px] border-zinc-600 space-y-2 flex flex-wrap">
+                <h1 className="text-white text-lg font-bold">
+                  Recent Searches
+                </h1>
+                {history
+                  .filter((item) => item.trim() !== '' && item.match(item))
+                  ?.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center cursor-pointer"
+                      onClick={() => handleTagQuery(item)}
+                    >
+                      <span className="text-sm px-3 py-3 capitalize bg-black/50 text-zinc-200 rounded-md border-[1px] border-zinc-700">
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
 
           <div className="ml-2 lg:hidden">

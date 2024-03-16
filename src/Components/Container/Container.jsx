@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import useGetImage from '../../Hooks/useGetImage.js';
 import Shimmer from './../Shimmer/Shimmer';
 import Header from '../Header/Header.jsx';
+import CollectionTag from './CollectionTag.jsx';
 
 const Container = () => {
   const query = useSelector((store) => store?.searchQuery?.query);
@@ -13,8 +14,11 @@ const Container = () => {
     <>
       <div className="w-full flex flex-col items-center justify-center">
         <Header />
-        <div className="max-w-7xl mx-auto flex flex-col items-center justify-between p-4 ">
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 pb-3 w-full ">
+        <div className="max-w-7xl mx-auto flex flex-col items-center justify-between px-4 py-2">
+          <div className="w-full flex flex-col items-center justify-center">
+            <CollectionTag />
+          </div>
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 py-1 w-full ">
             {randomImages.length === 0 && <Shimmer />}
             {randomImages.map((image, index) => (
               <Card

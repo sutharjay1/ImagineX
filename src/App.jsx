@@ -7,11 +7,14 @@ import { useRef } from 'react';
 import useGetRandomImage from './Hooks/useGetRandomImage.js';
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import SearchImageContainer from './Components/Container/SearchImageContainer.jsx';
-import { FaArrowUp } from 'react-icons/fa6';
+import { IoIosArrowUp } from 'react-icons/io';
+import { IoIosArrowDown } from 'react-icons/io';
+import useGetCollections from './Hooks/useGetCollections.js';
 
 function App() {
   useGetImage();
   useGetRandomImage();
+  useGetCollections();
 
   const dispatch = useDispatch();
 
@@ -21,7 +24,12 @@ function App() {
 
   const handleScroll = (e) => {
     const target = e.target;
-    if (target.scrollTop + target.clientHeight === target.scrollHeight) {
+    const threshold = 1;
+
+    if (
+      target.scrollTop + target.clientHeight >=
+      target.scrollHeight - threshold
+    ) {
       dispatch(setPageNumber(pageNumber + 1));
     }
   };
@@ -30,11 +38,18 @@ function App() {
     containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollToBottom = (e) => {
+    containerRef.current.scrollTo({
+      top: containerRef.current.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <>
       <div
         style={{ height: `${window.innerHeight}px` }}
-        className="w-full  flex-col items-center justify-center overflow-y-scroll"
+        className="w-full h-screen flex-col items-center justify-center overflow-y-scroll"
         onScroll={handleScroll}
         ref={containerRef}
       >
@@ -46,7 +61,14 @@ function App() {
           className="absolute bottom-0 right-0 mx-5 my-6"
           onClick={scrollToTop}
         >
-          <FaArrowUp />
+          <IoIosArrowUp />
+        </button>
+
+        <button
+          className="absolute bottom-0 left-0 mx-5 my-6"
+          onClick={scrollToBottom}
+        >
+          <IoIosArrowDown />
         </button>
       </div>
     </>

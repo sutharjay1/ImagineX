@@ -1,13 +1,16 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setRandomImages } from '../store/imageSlice.js';
-import Shimmer from '../Components/Shimmer/Shimmer.jsx';
+import { setImages } from '../store/imageSlice.js';
+import { setCollections } from '../store/collectionSlice.js';
 
-const useGetRandomImage = () => {
+const useGetCollections = () => {
   const dispatch = useDispatch();
-  const randomImages = useSelector((store) => store?.image?.randomImages);
+
+  const query = useSelector((store) => store?.searchQuery?.query);
   const pageNumber = useSelector((store) => store?.searchQuery?.pageNumber);
+  const images = useSelector((store) => store?.image?.images);
+  const isNewQuery = useSelector((store) => store?.searchQuery?.isNewQuery);
 
   const multipleClientId = [
     import.meta.env.VITE_API_ONE,
@@ -20,26 +23,28 @@ const useGetRandomImage = () => {
   let clientId =
     multipleClientId[Math.floor(Math.random() * multipleClientId.length)];
 
-  const getRandomImage = async () => {
+  const getCollections = async () => {
     try {
       const data = await axios.get(
-        `https://api.unsplash.com/photos/random?client_id=${clientId}&count=20&per_page=20&page=${pageNumber}`
+        `https://api.unsplash.com/collections?client_id=${clientId}&count=20&per_page=30&page=${pageNumber}`
       );
+      console.log('data', data);
       const newResult = data?.data;
 
-      dispatch(setRandomImages([...randomImages, ...newResult]));
+      dispatch(setCollections(newResult));
     } catch (error) {
+      console.log(error);
       if (error.response && error.response.status === 403) {
         const index = multipleClientId.indexOf(clientId);
         clientId = multipleClientId[(index + 1) % multipleClientId.length];
-        await getRandomImage();
+        await getImage(); // Retry with the next API key
       }
     }
   };
 
   useEffect(() => {
-    getRandomImage();
-  }, [pageNumber]);
+    getCollections();
+  }, []);
 };
 
-export default useGetRandomImage;
+export default useGetCollections;

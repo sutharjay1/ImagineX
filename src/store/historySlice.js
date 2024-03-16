@@ -8,6 +8,7 @@ const historySlice = createSlice({
   },
   reducers: {
     setHistory: (state, action) => {
+      if(state.history.includes(action.payload)) return
       state.history = [...state.history.join(',').split(','), action.payload];
     },
     setCurrentViewImage: (state, action) => {

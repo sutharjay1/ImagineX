@@ -12,15 +12,14 @@ const ViewImage = () => {
   const currentImage = useSelector((store) => store?.history?.currentViewImage);
   const isNewQuery = useSelector((store) => store?.searchQuery?.isNewQuery);
 
-  const handleDownloadImage = () => {
+  const handleDownloadImage = (e) => {
+    e.preventDefault();
     const link = document.createElement('a');
+    link.href = currentImage?.urls?.full;
     link.download = `${currentImage?.id}.jpg`;
-    link.href = currentImage?.urls?.regular;
     document.body.appendChild(link);
-    link.onclick = () => {
-      URL.revokeObjectURL(link.href);
-    };
-    document.body.removeChild(link);
+    link.click();
+    link.remove();
   };
 
   const handleTagQuery = (query) => {
@@ -31,66 +30,82 @@ const ViewImage = () => {
     navigate(`/photos?query=${query}`);
   };
 
-  const handleHideImagePanel = () => {
-    setShowImagePanel(false);
-  };
-
   return (
     <>
-      <div className="w-full h-screen flex flex-col items-center justify-start bg-black/45 backdrop-blur-md lg:mx-4 md:mx-2 mx-0 lg:mt-28 md:mt-20 mt-44 rounded-lg z-50 overflow-hidden">
-        {/* <button
-          className="absolute top-4 left-4 text-white text-xl rounded-full bg-zinc-200 bg-opacity-50 p-2 hover:bg-opacity-75 lg"
-          onClick={handleHideImagePanel}
-        >
-          <IoClose />
-        </button> */}
-        <div className="w-full flex items-center justify-between  bg-black/50 backdrop-blur-md lg:p-5 md:p- p-5">
-          <div className="flex items-center gap-4 text-left ">
+      <div className="fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-start bg-black/35 backdrop-blur-lg lg:mr-40 md:mx-2 mx-0 lg:mt-14 md:mt-14 mt-14 rounded-lg  z-50 overflow-y-auto">
+        <div className="w-full flex items-center justify-between  bg-black/5 backdrop-blur-lg lg:p-5 md:p- p-5">
+          <div className="flex items-center gap-4 text-left">
             <img
               src={currentImage?.user?.profile_image?.medium}
               className="w-9 rounded-full"
               alt={currentImage?.user?.name}
+              download={`${currentImage?.id}.jpg`}
             />
             <span className="text-base font-medium text-zinc-200">
               {currentImage?.user?.name}
             </span>
           </div>
+
           <button
             className="px-4 py-1 text-zinc-200"
-            onClick={handleDownloadImage}
+            onClick={(e) => handleDownloadImage(e)}
           >
             Download
           </button>
         </div>
 
-        <div className="w-auto h-auto flex items-start justify-center bg-black/45 backdrop-blur-md ">
+        <div className="w-auto lg:h-[75%] md:h-[75%] h-[70%] flex items-start justify-center bg-black/40 backdrop-blur-lg">
           <img
             src={currentImage?.urls?.regular}
-            className="w-auto h-auto mt-2 object-cover"
+            className="w-full h-full object-cover"
             draggable="false"
           />
         </div>
 
-        <div className="w-full flex flex-col items-start justify-start p-4 bg-black/65 backdrop-blur-md text-zinc-200">
-          <div className="w-full lg:block md:block hidden gap-3 ">
+        <div className="w-full flex items-center justify-center p-4 bg-black/5 backdrop-blur-lg text-zinc-200">
+          <div className="w-full lg:block md:block hidden gap-3">
+            <span className="text-base font-normal px-1">Views</span>
+            <span className="text-base font-normal px-1">•</span>
+            <span className="text-base font-normal px-1">
+              {currentImage?.views || '-'}
+            </span>
+          </div>
+
+          <div className="w-full lg:block md:block hidden gap-3">
             <span className="text-base font-normal px-1">Likes</span>
             <span className="text-base font-normal px-1">•</span>
             <span className="text-base font-normal px-1">
-              {currentImage?.likes}
+              {currentImage?.likes || '-'}
             </span>
           </div>
-          <div className="w-full lg:hidden md:hidden block">
-            <span className="text-base font-normal">
-              Likes • {currentImage?.likes}
+          <div className="w-full lg:block md:block hidden gap-3">
+            <span className="text-base font-normal px-1">Downloads</span>
+            <span className="text-base font-normal px-1">•</span>
+            <span className="text-base font-normal px-1">
+              {currentImage?.downloads || '-'}
             </span>
+          </div>
+
+          <div className="w-full lg:hidden md:hidden block">
+            <div className="w-full flex flex-col items-start justify-between space-y-1">
+              <span className="text-base font-normal">
+                Views • {currentImage?.views || '-'}
+              </span>
+              <span className="text-base font-normal">
+                Likes • {currentImage?.likes || '-'}
+              </span>
+              <span className="text-base font-normal">
+                Downloads • {currentImage?.downloads || '-'}
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="w-full flex flex-wrap items-center justify-start p-4 bg-black/45 backdrop-blur-md text-zinc-800 gap-2">
+        <div className="w-full flex flex-wrap items-center justify-start px-4 bg-black/40 backdrop-blur-lg text-zinc-800 gap-2">
           {currentImage?.tags?.map((tag) => (
             <span
               key={tag?.title}
-              className="px-3 py-2 rounded-md bg-gray-300 capitalize"
+              className="text-sm px-3 py-3 capitalize bg-zinc-300 text-zinc-800 rounded-md border-[1px] border-zinc-700"
               onClick={() => handleTagQuery(tag?.title)}
             >
               {tag?.title}
