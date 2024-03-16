@@ -23,12 +23,12 @@ const CollectionTag = () => {
     <div className="w-full flex items-center justify-start gap-2 -my-1 mb-1 overflow-x-auto cursor-pointer">
       {collections.map((collection) => (
         <div
-          key={collection.id}
+          key={collection.title}
           className="flex gap-2"
         >
           {collection?.tags.map((tag) => (
             <div
-              key={tag.id}
+              key={`${tag.title}`}
               className="flex items-center"
               onClick={() => handleTagQuery(tag)}
             >

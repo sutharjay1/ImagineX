@@ -28,7 +28,6 @@ const useGetCollections = () => {
       const data = await axios.get(
         `https://api.unsplash.com/collections?client_id=${clientId}&count=20&per_page=30&page=${pageNumber}`
       );
-      console.log('data', data);
       const newResult = data?.data;
 
       dispatch(setCollections(newResult));
