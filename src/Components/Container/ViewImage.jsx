@@ -12,19 +12,15 @@ const ViewImage = () => {
   const currentImage = useSelector((store) => store?.history?.currentViewImage);
   const isNewQuery = useSelector((store) => store?.searchQuery?.isNewQuery);
 
-  const handleDownloadImage = () => {
-    const imageUrl = currentImage?.urls?.full;
-
-    if (imageUrl) {
-      const link = document.createElement('a');
-      link.href = imageUrl;
-      link.download = `${currentImage?.id}.jpg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      console.error('Image URL not found');
-    }
+  const handleDownloadImage = (e) => {
+    e.preventDefault();
+    const imageUrl = currentImage?.links?.download;
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = `${currentImage?.id}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleTagQuery = (query) => {
@@ -51,12 +47,24 @@ const ViewImage = () => {
             </span>
           </div>
 
-          <button
+          <a
+            href={currentImage?.urls?.full}
+            download={`${currentImage?.id}.jpg`}
+          >
+            <button
+              className="px-4 py-1 text-zinc-200"
+              onClick={(e) => handleDownloadImage(e)}
+            >
+              Download
+            </button>
+          </a>
+
+          {/* <button
             className="px-4 py-1 text-zinc-200"
             onClick={(e) => handleDownloadImage(e)}
           >
             Download
-          </button>
+          </button> */}
         </div>
 
         <div className="w-auto lg:h-[75%] md:h-[75%] h-[70%] flex items-start justify-center bg-black/40 backdrop-blur-lg">
