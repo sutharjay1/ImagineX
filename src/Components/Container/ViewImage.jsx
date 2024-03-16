@@ -12,14 +12,19 @@ const ViewImage = () => {
   const currentImage = useSelector((store) => store?.history?.currentViewImage);
   const isNewQuery = useSelector((store) => store?.searchQuery?.isNewQuery);
 
-  const handleDownloadImage = (e) => {
-    e.preventDefault();
-    const link = document.createElement('a');
-    link.href = currentImage?.urls?.full;
-    link.download = `${currentImage?.id}.jpg`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+  const handleDownloadImage = () => {
+    const imageUrl = currentImage?.urls?.full;
+
+    if (imageUrl) {
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = `${currentImage?.id}.jpg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      console.error('Image URL not found');
+    }
   };
 
   const handleTagQuery = (query) => {
@@ -62,7 +67,7 @@ const ViewImage = () => {
           />
         </div>
 
-        <div className="w-full flex items-center justify-center p-4 bg-black/5 backdrop-blur-lg text-zinc-200">
+        <div className="w-full flex flex-col gap-1 items-center justify-center p-4 bg-black/5 backdrop-blur-lg text-zinc-200">
           <div className="w-full lg:block md:block hidden gap-3">
             <span className="text-base font-normal px-1">Views</span>
             <span className="text-base font-normal px-1">•</span>
@@ -99,18 +104,18 @@ const ViewImage = () => {
               </span>
             </div>
           </div>
-        </div>
 
-        <div className="w-full flex flex-wrap items-center justify-start px-4 bg-black/40 backdrop-blur-lg text-zinc-800 gap-2 overflow-x-auto pb-4">
-          {currentImage?.tags?.map((tag) => (
-            <span
-              key={tag?.title}
-              className="text-sm px-3 py-3 capitalize bg-zinc-300 text-zinc-800 rounded-md border-[1px] border-zinc-700"
-              onClick={() => handleTagQuery(tag?.title)}
-            >
-              {tag?.title}
-            </span>
-          ))}
+          <div className="w-full flex flex-wrap items-center justify-start px-4 bg-black/40 backdrop-blur-lg text-zinc-800 gap-2 overflow-x-auto pb-4">
+            {currentImage?.tags?.map((tag) => (
+              <span
+                key={tag?.title}
+                className="text-sm px-3 py-2 capitalize bg-zinc-800 text-zinc-300 rounded-md border-[1px] border-zinc-600"
+                onClick={() => handleTagQuery(tag?.title)}
+              >
+                {tag?.title}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </>
