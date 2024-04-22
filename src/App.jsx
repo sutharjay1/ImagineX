@@ -61,14 +61,14 @@ function App() {
           className="absolute bottom-0 right-0 mx-5 my-6"
           onClick={scrollToBottom}
         >
-          <IoIosArrowUp />
+          <IoIosArrowDown />
         </button>
 
         <button
           className="absolute bottom-0 left-0 mx-5 my-6"
           onClick={scrollToTop}
         >
-          <IoIosArrowDown />
+          <IoIosArrowUp />
         </button>
       </div>
     </>
