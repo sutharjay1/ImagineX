@@ -84,7 +84,7 @@ const Header = () => {
               />
             </Link> */}
             <Link to="/">
-              <span className="font-bold text-2xl lg:text-2xl lg:block md:block sm:block hidden select-none">
+              <span className="font-bold text-2xl lg:text-2xl lg:block md:block sm:block pr-3 select-none">
                 ImagineX
               </span>
             </Link>
