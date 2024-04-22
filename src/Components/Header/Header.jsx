@@ -79,12 +79,12 @@ const Header = () => {
             <Link to="/">
               <img
                 className="w-[5rem] h-auto lg:w-[4rem] lg:h-auto md:w-[4rem] md:h-auto sm:w-[3rem] sm:h-auto"
-                src="https://img.icons8.com/laces/ffffff/256/p.png"
+                src="https://img.icons8.com/laces/ffffff/256/i.png"
                 alt="p"
               />
             </Link>
             <span className="font-bold text-2xl lg:text-2xl lg:block md:block sm:block hidden">
-              Pixio
+              ImagineX
             </span>
           </div>
 
