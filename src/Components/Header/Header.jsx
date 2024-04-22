@@ -76,12 +76,14 @@ const Header = () => {
       <div className="relative w-full bg-black/20 backdrop-blur text-white p-2 z-10">
         <div className="mx-auto flex max-w-7xl items-center justify-between lg:px-8 lg:py-2 sm:px-6 sm:py-2 px-4 py-2 ">
           <div className="flex items-center justify-center gap-2">
-            <Link to="/">
+            {/* <Link to="/">
               <img
                 className="w-[5rem] h-auto lg:w-[4rem] lg:h-auto md:w-[4rem] md:h-auto sm:w-[3rem] sm:h-auto"
                 src="https://img.icons8.com/laces/ffffff/256/i.png"
                 alt="p"
               />
+            </Link> */}
+            <Link to="/">
               <span className="font-bold text-2xl lg:text-2xl lg:block md:block sm:block hidden select-none">
                 ImagineX
               </span>
