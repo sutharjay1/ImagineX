@@ -82,10 +82,10 @@ const Header = () => {
                 src="https://img.icons8.com/laces/ffffff/256/i.png"
                 alt="p"
               />
+              <span className="font-bold text-2xl lg:text-2xl lg:block md:block sm:block hidden select-none">
+                ImagineX
+              </span>
             </Link>
-            <span className="font-bold text-2xl lg:text-2xl lg:block md:block sm:block hidden select-none">
-              ImagineX
-            </span>
           </div>
 
           <div className="hidden lg:block md:block">
