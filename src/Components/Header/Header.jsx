@@ -83,7 +83,7 @@ const Header = () => {
                 alt="p"
               />
             </Link>
-            <span className="font-bold text-2xl lg:text-2xl lg:block md:block sm:block hidden">
+            <span className="font-bold text-2xl lg:text-2xl lg:block md:block sm:block hidden select-none">
               ImagineX
             </span>
           </div>
