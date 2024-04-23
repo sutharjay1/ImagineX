@@ -1,3 +1,3 @@
-# Pixio Photos
+# ImagineX
 
-[Explore here](https://pixio-3e06c.web.app)
+[Explore here](https://imaginexai.vercel.app)
