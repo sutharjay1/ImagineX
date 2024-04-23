@@ -110,7 +110,7 @@ const Header = () => {
           <div className="w-full relative flex justify-end lg:mx-auto sm:mx-3 mx-1">
             <form onSubmit={handleSearchQuery}>
               <input
-                className="lg:w-[600px] sm:w-[400px] w-full max-w-xl h-10 flex sm:justify-center justify-center rounded-lg bg-black/90 pl-5 px-3 py-2 text-sm placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
+                className="lg:w-[600px] sm:w-[400px] w-full hidden max-w-xl h-10 flex sm:justify-center justify-center rounded-lg bg-black/90 pl-5 px-3 py-2 text-sm placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
                 type="text"
                 placeholder="Search"
                 value={tempQuery}
